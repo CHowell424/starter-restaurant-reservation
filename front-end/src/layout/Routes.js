@@ -1,10 +1,11 @@
 import React from "react";
-
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
-
+import NewReservation from "../reservations/reservation-displays/NewReservation";
+import NewTable from "../tables/tables-displays.js/tables-displays/NewTable";
+import SeatReservation from "../reservations/reservation-displays/SeatReservation";
 /**
  * Defines all the routes for the application.
  *
@@ -12,18 +13,34 @@ import { today } from "../utils/date-time";
  *
  * @returns {JSX.Element}
  */
-function Routes() {
+function Routes({refreshTables, refreshDash,dash, tab}) {
+
   return (
     <Switch>
       <Route exact={true} path="/">
         <Redirect to={"/dashboard"} />
       </Route>
+
       <Route exact={true} path="/reservations">
         <Redirect to={"/dashboard"} />
       </Route>
+
       <Route path="/dashboard">
-        <Dashboard date={today()} />
+        <Dashboard date={today()} tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
       </Route>
+
+      <Route exact={true} path = "/reservations/new">
+        <NewReservation tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
+      </Route>
+
+      <Route path = "/tables/new">
+        <NewTable tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash} />
+      </Route>
+
+      <Route path = "/reservations/:reservation_id/seat">
+        <SeatReservation tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
+      </Route>
+
       <Route>
         <NotFound />
       </Route>

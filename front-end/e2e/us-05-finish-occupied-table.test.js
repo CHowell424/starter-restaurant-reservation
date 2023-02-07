@@ -111,7 +111,7 @@ describe("US-05 - Finish an occupied table - E2E", () => {
         `[data-table-id-status="${table.table_id}"]`,
         "occupied"
       );
-
+      
       expect(containsOccupied).toBe(true);
 
       const finishButtonSelector = `[data-table-id-finish="${table.table_id}"]`;
