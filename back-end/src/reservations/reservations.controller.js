@@ -16,6 +16,7 @@ async function list(req, res) {
   data = [];
   if(date){
      data = await service.list(date);
+     data = data.filter((res)=>res.status!=="cancelled")
   }if(mobile_number){
     data = await service.list2();
     data = data.filter((res)=>res.mobile_number.includes(mobile_number))

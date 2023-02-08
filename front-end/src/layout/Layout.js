@@ -27,7 +27,7 @@ function Layout() {
           <Routes tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash} />
         </div >
 
-        <div className="col-md-3">
+        <div className="col-md-3 side-bar text-white">
           <Tables tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
         </div>
 

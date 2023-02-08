@@ -1,7 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
+import { setStatus } from "../../utils/api";
+import ErrorAlert from "../../layout/ErrorAlert";
 
-function SingleReservation({reservation}){
+function SingleReservation({reservation, dash, tab, refreshDash, refreshTables}){
     let seatButton = <div></div>
+    const [inputError,setInputError]=useState(null);
+    const cancelReservation = async (event)=>{
+        event.preventDefault();
+        if(reservation.status =="booked"){
+            if(window.confirm("Do you want to cancel this reservation?")){
+                const abortController = new AbortController();
+                let hi = await setStatus(reservation.reservation_id,"cancelled",abortController.signal)
+                await refreshDash(hi)
+        }}else{
+            let error = new Error("Can not cancel reservation that is seated");
+            setInputError(error)
+        }
+    }
+
     if(reservation.status == "booked"){
         seatButton = <a href ={`/reservations/${reservation.reservation_id}/seat`}>seat</a>;
     }
@@ -19,8 +35,11 @@ function SingleReservation({reservation}){
             <p className="ml-1">Mobile number: {reservation.mobile_number}</p>
         </div>
         <div className="row justify-content-around">
+            <a href = {`/reservations/${reservation.reservation_id}/edit`}>Edit</a>
+            <button className="btn btn-outline-dark" data-reservation-id-cancel={reservation.reservation_id} onClick={cancelReservation}>Cancel reservation</button>
             {seatButton}
         </div>
+        <ErrorAlert error={inputError} />
     </div>)
 }
 

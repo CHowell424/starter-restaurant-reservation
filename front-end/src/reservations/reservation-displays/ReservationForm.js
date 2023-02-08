@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router";
-import {createReservation} from"../../utils/api";
+import {createReservation,updateReservation} from"../../utils/api";
 import ErrorAlert from "../../layout/ErrorAlert";
 const hasValidReservationDate = require("../reservation-helper-functions/hasValidReservationDate");
 const hasValidReservationTime = require("../reservation-helper-functions/hasValidReservationTime");
@@ -14,18 +14,29 @@ const hasValidReservationTime = require("../reservation-helper-functions/hasVali
 
 
 function ReservationForm({reservation, type, dash,tab,refreshTables,refreshDash}){
-    const [formData,setFormData] = useState({reservation});
+    const [formData,setFormData] = useState({});
     const [inputError,setInputError]=useState(null);
     const history = useHistory();
     let fun = createReservation;
+    let show=false;
+    // handles the cancel reservation button
+
 
     //changes the submit to update a current reservation instead of creating a new one.
-    if(type = "update"){
-
+    if(type == "update"){
+        fun = updateReservation;
+        show = true;
     }
 
-    // default submition hadelder 
 
+    //loads the given reservation into the form
+    useEffect(LoadReservation,[])
+    function LoadReservation(){
+        setFormData(reservation);
+    }
+
+
+    // default submition hadelder 
     const handleSubmit = async (event)=> {
         event.preventDefault();
         let hasValidDate = hasValidReservationDate(formData.reservation_date);
@@ -50,13 +61,14 @@ function ReservationForm({reservation, type, dash,tab,refreshTables,refreshDash}
     }
 
 
-    // handles the canel button
+    // handles the cancel button
 
     const cancelHendeler = (event)=>{
         event.preventDefault();
         setFormData(reservation);
         history.goBack();
     }
+
 
     // updates form data to match the inputed data.
 
@@ -65,35 +77,47 @@ function ReservationForm({reservation, type, dash,tab,refreshTables,refreshDash}
         setFormData({...formData,[event.target.name]:text})
     }
 
-    return(<div>
-            <form className="rf-container" onSubmit={handleSubmit}>
-                <div className="rf-row">
-                    <label >First Name:</label>
-                    <input name ="first_name" onChange={changeHandeler} value = {formData.first_name}></input>
-
-                    <label >Last Name:</label>
-                    <input name ="last_name" onChange={changeHandeler} value = {formData.last_name}></input>
+    return(<div className="d-md-flex justify-content-center">
+            <form onSubmit={handleSubmit}>
+                <div className="row m-2 justify-content-around">
+                    <div>
+                        <label >First Name:</label>
+                        <input name ="first_name" onChange={changeHandeler} value = {formData.first_name}></input>
+                    </div>
+                    
+                    <div>
+                        <label >Last Name:</label>
+                        <input name ="last_name" onChange={changeHandeler} value = {formData.last_name}></input>
+                    </div>
                 </div>
 
-                <div className="rf-row">
-                <label >Mobile Number:</label>
-                <input name ="mobile_number" onChange={changeHandeler}  value = {formData.mobile_number}></input>
+                <div className="row m-2 justify-content-around">
+                    <div>
+                        <label >Mobile Number:</label>
+                        <input name ="mobile_number" onChange={changeHandeler}  value = {formData.mobile_number}></input>
+                    </div>
 
-                <label >Number of People:</label>
-                <input name ="people" onChange={changeHandeler} value = {formData.people}></input>
+                    <div>
+                        <label >Number of People:</label>
+                        <input name ="people" onChange={changeHandeler} value = {formData.people}></input>
+                    </div>
                 </div>
 
-                <div className="rf-row">
-                <label >Reservation Date:</label>
-                <input type = "date" name ="reservation_date" onChange={changeHandeler}  value = {formData.reservation_date}></input>
-                
-                <label >Reservation Time:</label>
-                <input type = "time" name ="reservation_time" onChange={changeHandeler} value = {formData.reservation_time}></input>
+                <div className="row m-2 justify-content-around">
+                    <div>
+                        <label >Reservation Date:</label>
+                        <input type = "date" name ="reservation_date" onChange={changeHandeler}  value = {formData.reservation_date}></input>
+                    </div>
+
+                    <div>
+                        <label >Reservation Time:</label>
+                        <input type = "time" name ="reservation_time" onChange={changeHandeler} value = {formData.reservation_time}></input>
+                    </div>
                 </div>
 
-                <div className="rf-row">
-                <button type = "submit">Submit</button>
-                <button onClick={cancelHendeler}>Cancel</button>
+                <div className="row m-2 justify-content-around">
+                    <button className="btn btn-outline-dark" type = "submit">Submit</button>
+                    <button className="btn btn-outline-dark" onClick={cancelHendeler}>Cancel</button>
                 </div>
 
                 <ErrorAlert error={inputError} />

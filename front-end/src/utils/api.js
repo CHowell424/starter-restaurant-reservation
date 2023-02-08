@@ -141,3 +141,35 @@ export async function finishTable(table_id,signal){
     signal
   })
 }
+
+//updates the reservation
+export async function updateReservation(reservation,signal){
+  const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`;
+  return await fetchJson(url,{
+    method:"PUT",
+    headers,
+    body:JSON.stringify({data:reservation}),
+    signal
+  })
+}
+
+//deletes the reservation
+export async function deleteReservation(reservation_id,signal){
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`
+  return await fetchJson(url,{
+    method:"DELETE",
+    headers,
+    signal
+  })
+}
+
+export async function setStatus(reservation_id,status,signal){
+  console.log(status)
+  const url =`${API_BASE_URL}/reservations/${reservation_id}/status`;
+  return await fetchJson(url,{
+    method:"PUT",
+    headers,
+    body: JSON.stringify({data:{status}}),
+    signal
+  }).then(console.log)
+}

@@ -6,6 +6,8 @@ import { today } from "../utils/date-time";
 import NewReservation from "../reservations/reservation-displays/NewReservation";
 import NewTable from "../tables/tables-displays.js/tables-displays/NewTable";
 import SeatReservation from "../reservations/reservation-displays/SeatReservation";
+import Search from "../search/search-displays/Search";
+import EditReservation from "../reservations/reservation-displays/EditReservation";
 /**
  * Defines all the routes for the application.
  *
@@ -39,6 +41,14 @@ function Routes({refreshTables, refreshDash,dash, tab}) {
 
       <Route path = "/reservations/:reservation_id/seat">
         <SeatReservation tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
+      </Route>
+
+      <Route path = "/reservations/:reservation_id/edit">
+        <EditReservation refreshDash={refreshDash} dash={dash} tab={tab} refreshTables={refreshTables}/>
+      </Route>
+
+      <Route path = "/search">
+        <Search/>
       </Route>
 
       <Route>

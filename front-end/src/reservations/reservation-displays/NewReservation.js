@@ -5,7 +5,7 @@ import ReservationForm from "../reservation-displays/ReservationForm"
 function NewReservation({dash,tab,refreshDash,refreshTables}){
     let reservation ={first_name:"",last_name:"",mobile_number:"",reservation_date:"",reservation_time:"",people:""}
     return (<div>
-        <h1 className="center">New Reservation</h1>
+        <h1 className="text-center">New Reservation</h1>
         <ReservationForm reservation={reservation} type={"new"} tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
         </div>)
 }

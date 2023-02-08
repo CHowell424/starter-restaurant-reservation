@@ -52,19 +52,25 @@ function TableForm({table, refreshTables,tab,dash,refreshDash}){
         setFormData({...formData,[event.target.name]:text})
     }
 
-    return (<div>
+    return (<div className="d-md-flex justify-content-center">
 
         <form onSubmit={handleSubmit}>
-            <label>Table Name:</label>
-            <input key={table.table_name} name = "table_name" onChange={changeHandeler} value = {formData.table_name}></input>
+            <div className="row m-2 justify-content-around">
+                <div className="col">
+                    <label>Table Name:</label>
+                    <input key={table.table_name} name = "table_name" onChange={changeHandeler} value = {formData.table_name}></input>
+                </div>
 
-            <label>Table Capacity:</label>
-            <input key={table.capacity} name = "capacity" onChange={changeHandeler} value = {formData.capacity}></input>
+                <div >
+                    <label>Table Capacity:</label>
+                    <input key={table.capacity} name = "capacity" onChange={changeHandeler} value = {formData.capacity}></input>
+                </div>
+            </div>
 
-            <button type = "submit"> Submit</button>
-
-            <button onClick={cancelHendeler}>Cancel</button>
-
+            <div className="row m-2 justify-content-around">
+                <button className="btn btn-outline-dark" type = "submit"> Submit</button>
+                <button className="btn btn-outline-dark" onClick={cancelHendeler}>Cancel</button>
+            </div>
             <ErrorAlert error={inputError} />
         </form>
 

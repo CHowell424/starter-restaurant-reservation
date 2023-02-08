@@ -42,8 +42,11 @@ function SeatReservation({refreshTables,refreshDash, dash, tab}){
         let reservation = await getReservation(reservationId);
         if(tableNotOccupie == true && hasCap == true){
             const abortController = new AbortController();
+            let dat = reservation.reservation_date;
+            dat = dat.split("T");
+            dat = dat[0];
             await seatTable(tableId,reservationId,abortController.signal);
-            history.push({pathname:`/dashboard`,search:`date=${reservation.reservation_date}`});
+            history.push({pathname:`/dashboard`,search:`date=${dat}`});
             refreshTables(!tab);
             refreshDash(!dash);
         }else{
@@ -64,16 +67,21 @@ function SeatReservation({refreshTables,refreshDash, dash, tab}){
     }
 
     return (<div>
+        <h1 className="text-center">Seat Reservation</h1>
+        <div className="d-md-flex justify-content-center">
         <form onSubmit={submitHandeler}>
-            <label>Table Name:</label>
-            <select name="table_id" onChange={changeHandeler}>
-                    {tables.map((table)=>{return <option value={table.table_id} selected>{table.table_name} - {table.capacity}</option>})}
-            </select>
-
-            <button onClick={cancelHandeler}>Cancel</button>
-
-            <button type="submit">Submit</button>
+            <div className="row m-2 justify-content-aroundr">
+                <label className="mr-1">Table Name:</label>
+                <select name="table_id" onChange={changeHandeler}>
+                     {tables.map((table)=>{return <option value={table.table_id} selected>{table.table_name} - {table.capacity}</option>})}
+                </select>
+            </div>
+            <div className="row m-2 justify-content-around">
+                <button className="btn btn-outline-dark" onClick={cancelHandeler}>Cancel</button>
+                <button className="btn btn-outline-dark" type="submit">Submit</button>
+            </div>
         </form>
+        </div>
         <ErrorAlert error={inputError} />
     </div>)
 }

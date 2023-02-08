@@ -55,7 +55,7 @@ async function finishReservation(req,res,next){
 async function finish(req,res,next){
     const table_id = req.params.table_id;
     let table = await service.read(table_id);
-    let updatedTable = await service.finish({...table,occupied:false});
+    let updatedTable = await service.finish({...table,reservation_id:null,occupied:false});
     res.json({data:updatedTable});
 }
 
