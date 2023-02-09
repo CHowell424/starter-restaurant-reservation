@@ -4,7 +4,6 @@ import { finishTable} from "../../../utils/api";
 function SingleTable({table, refreshTables, tab, refreshDash,dash}){
     const [button,setButton]=useState(<p className="col-md-4">N/A</p>)
     let occupiedString = table.reservation_id ? "Occupied" : "Free";
-
     
     useEffect(changeOccupied,[table.occupied, table.reservation_id])
     function changeOccupied(){
@@ -16,10 +15,11 @@ function SingleTable({table, refreshTables, tab, refreshDash,dash}){
     const finishHandler = async (event)=>{
         let table_id = event.target.id;
           if(window.confirm("Is this table ready to seat new guests? This cannot be undone.")){
-            setButton(<p className="col-md-4">N/A</p>)
+            
             await finishTable(table_id);
             await refreshDash(!dash);
             await refreshTables(!tab);
+            setButton(<p className="col-md-4">N/A</p>)
           }
       }
     return(<div className="row justify-content-around">
