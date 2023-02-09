@@ -17,3 +17,4 @@ knex.migrate
 function listener() {
   console.log(`Listening on Port ${PORT}!`);
 }
+process.on('uncaughtException',function(err){console.log(err)})
