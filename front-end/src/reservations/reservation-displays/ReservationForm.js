@@ -46,9 +46,10 @@ function ReservationForm({reservation, type, dash,tab,refreshTables,refreshDash}
             await fun(formData,abortController.signal)
             let reservation_date = formData.reservation_date;
             setFormData(reservation);
+            history.push({pathname:`/dashboard`,search:`date=${reservation_date}`});
             refreshDash(!dash);
             refreshTables(!tab);
-            history.push({pathname:`/dashboard`,search:`date=${reservation_date}`});
+            
         }else{
             if(hasValidDate === true){
                 let error = new Error(hasValidTime);
