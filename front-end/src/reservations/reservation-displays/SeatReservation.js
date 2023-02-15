@@ -6,7 +6,7 @@ import tableNotOccupied from"../reservation-helper-functions/tableNotOccupied";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { seatTable } from "../../utils/api";
 
-function SeatReservation({refreshTables,refreshDash, dash, tab}){
+function SeatReservation({refreshTables, tab, setDate}){
     const[tables,setTables] = useState([]);
     const[tableId,setTableId] = useState(1);
     const [inputError,setInputError]=useState(null);
@@ -48,7 +48,7 @@ function SeatReservation({refreshTables,refreshDash, dash, tab}){
             await seatTable(tableId,reservationId,abortController.signal);
             history.push({pathname:`/dashboard`,search:`date=${dat}`});
             refreshTables(!tab);
-            refreshDash(!dash);
+            setDate(dat);
         }else{
             if(hasCap == true){
                 let error = new Error(tableNotOccupie)

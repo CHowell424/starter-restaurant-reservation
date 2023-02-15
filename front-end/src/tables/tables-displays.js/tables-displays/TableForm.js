@@ -8,7 +8,7 @@ const hasValidCapacity = require("../tables-helper-functions/hasValidCappacity")
 // Creates a form for tables and the event handelers
 
 
-function TableForm({table, refreshTables,tab,dash,refreshDash}){
+function TableForm({table, refreshTables,tab}){
     const [formData,setFormData] = useState(table);
     const [inputError,setInputError]=useState(null);
     const history = useHistory();
@@ -24,7 +24,6 @@ function TableForm({table, refreshTables,tab,dash,refreshDash}){
             await createTable(formData,abortController.signal);
             setFormData(table);
             refreshTables(!tab);
-            refreshDash(!dash)
             history.push("/dashboard");
         }else{
             if(hasValidCap === true){

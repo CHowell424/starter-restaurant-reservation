@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { finishTable} from "../../../utils/api";
+import { today } from "../../../utils/date-time";
 
-function SingleTable({table, refreshTables, tab, refreshDash,dash}){
+function SingleTable({table, refreshTables, tab, date, setDate}){
     const [button,setButton]=useState(<p className="col-md-4">N/A</p>)
     let occupiedString = table.reservation_id ? "Occupied" : "Free";
     
@@ -17,7 +18,8 @@ function SingleTable({table, refreshTables, tab, refreshDash,dash}){
           if(window.confirm("Is this table ready to seat new guests? This cannot be undone.")){
             
             await finishTable(table_id);
-            await refreshDash(!dash);
+            setDate(today())
+            setDate(date)
             await refreshTables(!tab);
             setButton(<p className="col-md-4">N/A</p>)
           }

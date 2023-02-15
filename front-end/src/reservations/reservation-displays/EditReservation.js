@@ -5,7 +5,7 @@ import ReservationForm from "./ReservationForm"
 import formatReservationDate from "../../utils/format-reservation-date";
 import formatReservationTime from "../../utils/format-reservation-time";
 
-function EditReservation({dash, refreshDash, tab,refreshTables}){
+function EditReservation({setDate}){
     const [reservationForm,setReservationForm]=useState(<div></div>);
     const params = useParams();
     async function LoadReservation(){
@@ -13,7 +13,7 @@ function EditReservation({dash, refreshDash, tab,refreshTables}){
         await getReservation(params.reservation_id,abortContoller.signal)
             .then(formatReservationDate)
             .then(formatReservationTime)
-            .then((value)=>setReservationForm(<ReservationForm type="update" reservation={value} dash={dash} refreshDash={refreshDash} tab={tab} refreshTables={refreshTables}/>))
+            .then((value)=>setReservationForm(<ReservationForm type="update" setDate={setDate} reservation={value}/>))
     }
 
     useEffect(LoadReservation,[]);

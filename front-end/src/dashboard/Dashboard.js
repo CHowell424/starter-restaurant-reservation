@@ -10,7 +10,7 @@ import { useHistory } from "react-router";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({date, dash, refreshTables, tab, refreshDash}) {
+function Dashboard({date, refreshTables, tab, setDate}) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const [displayDate,setDisplayDate]=useState(date);
@@ -20,7 +20,7 @@ function Dashboard({date, dash, refreshTables, tab, refreshDash}) {
   });
 
   if(params.date){
-    date = params.date;
+    setDate(params.date);
   }
 
   const changeDate = (event)=>{
@@ -37,13 +37,13 @@ function Dashboard({date, dash, refreshTables, tab, refreshDash}) {
     const month = subDate.getUTCMonth() + 1; 
     const day = subDate.getUTCDate();
     const year = subDate.getUTCFullYear();
-    date = `${year}/${month}/${day}`;
-    history.push({pathname:`/dashboard`,search:`date=${date}`});
-    refreshDash(!dash);
+    let dat = `${year}/${month}/${day}`;
+    history.push({pathname:`/dashboard`,search:`date=${dat}`});
+    setDate(dat)
   }
 
 
-  useEffect(loadDashboard, [date,dash]);
+  useEffect(loadDashboard, [date]);
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
@@ -53,7 +53,7 @@ function Dashboard({date, dash, refreshTables, tab, refreshDash}) {
       .catch(setReservationsError);
     return () => abortController.abort();
   }
-//
+
   return (
     <main>
       <h4 className="text-center">Dashboard</h4>
@@ -66,7 +66,7 @@ function Dashboard({date, dash, refreshTables, tab, refreshDash}) {
         <button name="today" onClick={changeDate} className="btn btn-outline-dark">Today</button>
       </div>
       <ErrorAlert error={reservationsError} />
-      <Reservations reservations={reservations} tab={tab} refreshDash={refreshDash} refreshTables={refreshTables} dash={dash}/>
+      <Reservations date={date} setDate={setDate} reservations={reservations} tab={tab} refreshTables={refreshTables}/>
     </main>
   );
 }

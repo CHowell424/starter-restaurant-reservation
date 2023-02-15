@@ -15,7 +15,7 @@ import EditReservation from "../reservations/reservation-displays/EditReservatio
  *
  * @returns {JSX.Element}
  */
-function Routes({refreshTables, refreshDash,dash, tab}) {
+function Routes({ date, setDate,refreshTables, tab}) {
 
   return (
     <Switch>
@@ -28,27 +28,27 @@ function Routes({refreshTables, refreshDash,dash, tab}) {
       </Route>
 
       <Route path="/dashboard">
-        <Dashboard date={today()} tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
+        <Dashboard date={date} setDate={setDate} tab={tab} refreshTables={refreshTables} />
       </Route>
 
       <Route exact={true} path = "/reservations/new">
-        <NewReservation tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
+        <NewReservation date={date} setDate={setDate} tab={tab} refreshTables={refreshTables} />
       </Route>
 
       <Route path = "/tables/new">
-        <NewTable tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash} />
+        <NewTable date={date} setDate={setDate} tab={tab} refreshTables={refreshTables}  />
       </Route>
 
       <Route path = "/reservations/:reservation_id/seat">
-        <SeatReservation tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
+        <SeatReservation date={date} setDate={setDate} tab={tab} refreshTables={refreshTables}/>
       </Route>
 
       <Route path = "/reservations/:reservation_id/edit">
-        <EditReservation refreshDash={refreshDash} dash={dash} tab={tab} refreshTables={refreshTables}/>
+        <EditReservation date={date} setDate={setDate} tab={tab} refreshTables={refreshTables}/>
       </Route>
 
       <Route path = "/search">
-        <Search/>
+        <Search />
       </Route>
 
       <Route>

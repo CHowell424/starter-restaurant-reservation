@@ -3,6 +3,7 @@ import Menu from "./Menu";
 import Routes from "./Routes";
 import Tables from "../tables/tables-displays.js/tables-displays/Tables";
 import "./Layout.css";
+import { today } from "../utils/date-time";
 
 /**
  * Defines the main layout of the application.
@@ -13,7 +14,7 @@ import "./Layout.css";
  */
 function Layout() {
   const [tab,refreshTables]=useState(false);
-  const [dash,refreshDash]=useState(false);
+  const [date,setDate]=useState(today());
 
   return (
     <div className="container-fluid">
@@ -24,11 +25,11 @@ function Layout() {
         </div>
 
         <div className="col-md-7">
-          <Routes tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash} />
+          <Routes date={date} setDate={setDate} tab={tab} refreshTables={refreshTables}/>
         </div >
 
         <div className="col-md-3 side-bar text-white">
-          <Tables tab={tab} refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}/>
+          <Tables date={date} setDate={setDate} tab={tab} refreshTables={refreshTables}/>
         </div>
 
       </div>
@@ -36,7 +37,4 @@ function Layout() {
   );
 }
 
-/**setRefreshTables={setRefreshTables} refreshTables={refreshTables} dashRef ={dash}
- * refreshTables={refreshTables} refreshDash={refreshDash} dash={dash}
- */
 export default Layout;

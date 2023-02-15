@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SingleReservation from "../../reservations/reservation-displays/SingleReservation";
 import ErrorAlert from "../../layout/ErrorAlert";
 import {listReservations} from "../../utils/api";

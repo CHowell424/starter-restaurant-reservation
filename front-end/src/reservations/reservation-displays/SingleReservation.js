@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import { setStatus } from "../../utils/api";
 import ErrorAlert from "../../layout/ErrorAlert";
+import { today } from "../../utils/date-time";
 
-function SingleReservation({reservation, dash, tab, refreshDash, refreshTables}){
+function SingleReservation({reservation, setDate}){
     let seatButton = <div></div>
     const [inputError,setInputError]=useState(null);
     const cancelReservation = async (event)=>{
@@ -10,8 +11,8 @@ function SingleReservation({reservation, dash, tab, refreshDash, refreshTables})
         if(reservation.status =="booked"){
             if(window.confirm("Do you want to cancel this reservation?")){
                 const abortController = new AbortController();
-                let hi = await setStatus(reservation.reservation_id,"cancelled",abortController.signal)
-                await refreshDash(hi)
+                await setStatus(reservation.reservation_id,"cancelled",abortController.signal)
+                setDate(today())
         }}else{
             let error = new Error("Can not cancel reservation that is seated");
             setInputError(error)

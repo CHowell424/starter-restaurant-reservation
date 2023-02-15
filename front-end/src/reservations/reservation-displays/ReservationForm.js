@@ -13,7 +13,7 @@ const hasValidReservationTime = require("../reservation-helper-functions/hasVali
  */
 
 
-function ReservationForm({reservation, type, dash,tab,refreshTables,refreshDash}){
+function ReservationForm({reservation, type, setDate}){
     const [formData,setFormData] = useState({});
     const [inputError,setInputError]=useState(null);
     const history = useHistory();
@@ -45,9 +45,10 @@ function ReservationForm({reservation, type, dash,tab,refreshTables,refreshDash}
             let reservation_date = formData.reservation_date;
             const abortController = new AbortController();
             await fun(formData,abortController.signal)
+                .then(setDate(reservation_date))
                 .then(setFormData(reservation))
-                .then(history.push({pathname:`/dashboard`,search:`date=${reservation_date}`}))
-            refreshDash(!dash)
+            history.push({pathname:`/dashboard`,search:`date=${reservation_date}`})
+            
                 
             
         }else{

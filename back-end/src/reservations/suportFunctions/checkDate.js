@@ -3,7 +3,7 @@ async function checkDate(req,res,next){
     let res_date = new Date(data.reservation_date);
     let current = new Date();
     let future = true;
-    if(res_date.getDay() == 1){
+    if(res_date.getUTCDay() == 2){
         return next({status:400,message:"Reservation_date can not be a tuesday because the store is closed"})
     }
     if(current.getFullYear() > res_date.getFullYear()){
