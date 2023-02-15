@@ -42,13 +42,13 @@ function ReservationForm({reservation, type, dash,tab,refreshTables,refreshDash}
         let hasValidDate = hasValidReservationDate(formData.reservation_date);
         let hasValidTime = hasValidReservationTime(formData.reservation_time);
         if(hasValidDate ===true && hasValidTime ===true){
+            let reservation_date = formData.reservation_date;
             const abortController = new AbortController();
             await fun(formData,abortController.signal)
-            let reservation_date = formData.reservation_date;
-            setFormData(reservation);
-            history.push({pathname:`/dashboard`,search:`date=${reservation_date}`});
-            refreshDash(!dash);
-            refreshTables(!tab);
+                .then(setFormData(reservation))
+                .then(history.push({pathname:`/dashboard`,search:`date=${reservation_date}`}))
+            refreshDash(!dash)
+                
             
         }else{
             if(hasValidDate === true){

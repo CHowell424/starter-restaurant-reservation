@@ -5,7 +5,7 @@
 import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
-const API_BASE_URL = "http://localhost:5001";
+const API_BASE_URL ="http://localhost:5001";
   //process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 /**
@@ -144,6 +144,7 @@ export async function finishTable(table_id,signal){
 
 //updates the reservation
 export async function updateReservation(reservation,signal){
+  reservation = {...reservation, people:Number(reservation.people)}
   const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`;
   return await fetchJson(url,{
     method:"PUT",
@@ -164,12 +165,11 @@ export async function deleteReservation(reservation_id,signal){
 }
 
 export async function setStatus(reservation_id,status,signal){
-  console.log(status)
   const url =`${API_BASE_URL}/reservations/${reservation_id}/status`;
   return await fetchJson(url,{
     method:"PUT",
     headers,
     body: JSON.stringify({data:{status}}),
     signal
-  }).then(console.log)
+  })
 }

@@ -53,7 +53,7 @@ function Dashboard({date, dash, refreshTables, tab, refreshDash}) {
       .catch(setReservationsError);
     return () => abortController.abort();
   }
-
+//
   return (
     <main>
       <h4 className="text-center">Dashboard</h4>

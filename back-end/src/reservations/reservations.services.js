@@ -6,12 +6,12 @@ function read (reservationId){
 }
 
 // returns all reservations with the given date with all feilds
-function list (date){
-    return knex("reservations").select("*").where({reservation_date: date});
-}
-
-function list2(){
-    return knex("reservations").select("*");
+function list (param1 = null,param2,param3){
+    if(param1){
+        return knex("reservations").select("*").where(param1).whereNot(param2).whereNot(param3);
+    }else{
+       return knex("reservations").select("*");
+    }
 }
 
 // return the pushed new reservation to the database and upadates the created records
@@ -37,7 +37,6 @@ function update(reservation){
 module.exports ={
     read,
     list,
-    list2,
     create,
     destroy,
     update

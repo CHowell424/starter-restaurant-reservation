@@ -15,15 +15,13 @@ async function list(req, res) {
   const {date,mobile_number} = req.query;
   data = [];
   if(date){
-     data = await service.list(date);
-     data = data.filter((res)=>res.status!=="cancelled")
+     data = await service.list({reservation_date: date},{status: "cancelled"},{status: "finished"});
   }if(mobile_number){
-    data = await service.list2();
+    data = await service.list();
     data = data.filter((res)=>res.mobile_number.includes(mobile_number))
   }
   let sortedData = mergeSort(compareRT, data)
-  let reduced = sortedData.filter((res)=>res.status!=="finished")
-  return res.status(200).json({data:reduced});
+  return res.status(200).json({data:sortedData});
 }
 
 // returns created reservation
