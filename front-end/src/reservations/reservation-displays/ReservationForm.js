@@ -2,8 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router";
 import {createReservation,updateReservation} from"../../utils/api";
 import ErrorAlert from "../../layout/ErrorAlert";
-const hasValidReservationDate = require("../reservation-helper-functions/hasValidReservationDate");
-const hasValidReservationTime = require("../reservation-helper-functions/hasValidReservationTime");
+const checkInput = require("../reservation-helper-functions/checkInput");
 
 
 /**
@@ -39,26 +38,17 @@ function ReservationForm({reservation, type, setDate}){
     // default submition hadelder 
     const handleSubmit = async (event)=> {
         event.preventDefault();
-        let hasValidDate = hasValidReservationDate(formData.reservation_date);
-        let hasValidTime = hasValidReservationTime(formData.reservation_time);
-        if(hasValidDate ===true && hasValidTime ===true){
+        let input = checkInput(formData);
+        if(input ===true){
             let reservation_date = formData.reservation_date;
             const abortController = new AbortController();
             await fun(formData,abortController.signal)
                 .then(setDate(reservation_date))
                 .then(setFormData(reservation))
+                .catch(setInputError)
             history.push({pathname:`/dashboard`,search:`date=${reservation_date}`})
-            
-                
-            
         }else{
-            if(hasValidDate === true){
-                let error = new Error(hasValidTime);
-                setInputError(error);
-            }else{
-                let error = new Error(hasValidDate);
-                setInputError(error);
-            }
+            setInputError(input);
         }
     }
 
