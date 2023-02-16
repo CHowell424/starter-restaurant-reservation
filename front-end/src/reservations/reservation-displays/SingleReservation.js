@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import {Link} from "react-router-dom";
 import { setStatus } from "../../utils/api";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { today } from "../../utils/date-time";
@@ -20,7 +21,7 @@ function SingleReservation({reservation, setDate}){
     }
 
     if(reservation.status == "booked"){
-        seatButton = <a href ={`/reservations/${reservation.reservation_id}/seat`}>seat</a>;
+        seatButton = <Link to ={`/reservations/${reservation.reservation_id}/seat`}>Seat</Link>
     }
     return (<div className="col border border-dark">
         <div className="row justify-content-center">
@@ -36,12 +37,13 @@ function SingleReservation({reservation, setDate}){
             <p className="ml-1">Mobile number: {reservation.mobile_number}</p>
         </div>
         <div className="row justify-content-around">
-            <a href = {`/reservations/${reservation.reservation_id}/edit`}>Edit</a>
+            <Link to ={`/reservations/${reservation.reservation_id}/edit`}>Edit</Link>
             <button className="btn btn-outline-dark" data-reservation-id-cancel={reservation.reservation_id} onClick={cancelReservation}>Cancel reservation</button>
             {seatButton}
         </div>
         <ErrorAlert error={inputError} />
     </div>)
 }
-
+//<a href = {`/reservations/${reservation.reservation_id}/edit`}>Edit</a>
+// <a href ={`/reservations/${reservation.reservation_id}/seat`}>seat</a>;
 export default SingleReservation;
